@@ -1,4 +1,6 @@
 package com.truyenho.repository;
 
-public interface CustomerRepository {
+import com.truyenho.model.Customer;
+
+public interface CustomerRepository extends Repository<Customer> {
 }

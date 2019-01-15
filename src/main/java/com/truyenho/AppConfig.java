@@ -1,5 +1,9 @@
 package com.truyenho;
 
+import com.truyenho.repository.CustomerRepository;
+import com.truyenho.repository.impl.CustomerRepositoryImpl;
+import com.truyenho.service.CustomerService;
+import com.truyenho.service.impl.CustomerServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -35,6 +39,16 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     this.applicationContext = applicationContext;
   }
 
+  @Bean
+  public CustomerRepository customerRepository() {
+    return new CustomerRepositoryImpl();
+  }
+
+  @Bean
+  public CustomerService customerService() {
+    return new CustomerServiceImpl();
+  }
+
   //JPA configuration
   @Bean
   @Qualifier(value = "entityManager")
@@ -55,17 +69,17 @@ public class AppConfig extends WebMvcConfigurerAdapter implements ApplicationCon
   }
 
   @Bean
-  public DataSource dataSource(){
+  public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
     dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
     dataSource.setUrl("jdbc:mysql://localhost:3306/cms-restful");
-    dataSource.setUsername( "root" );
-    dataSource.setPassword( "admin" );
+    dataSource.setUsername("root");
+    dataSource.setPassword("admin");
     return dataSource;
   }
 
   @Bean
-  public PlatformTransactionManager transactionManager(EntityManagerFactory emf){
+  public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
     JpaTransactionManager transactionManager = new JpaTransactionManager();
     transactionManager.setEntityManagerFactory(emf);
     return transactionManager;
